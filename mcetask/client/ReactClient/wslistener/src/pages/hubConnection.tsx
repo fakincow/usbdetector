@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 import { useEffect, useState } from "react";
 import { DeviceCard } from "../components/DeviceCard";
 import { FileSystemNavigator } from "../components/InputNavigator";
+import { IDeviceInfo } from '../models/models';
 
 const connectionAdress: string = "http://localhost:9000";
 const socket = io(connectionAdress);
@@ -12,16 +13,16 @@ export function HubConnection() {
     const [devices, setDevices] = useState([]);
     const [tree, setTree] = useState(new Map());
 
-    const createCategorys = (data) => {
+    const createCategorys = (data:IDeviceInfo[]) => {
         let types = new Map();
         if (!data) return;
         data.forEach(element => {
-            if (types[element['deviceName']]) {
-                let children = types[element['deviceName']];
+            if (types[element.deviceName]) {
+                let children = types[element.deviceName];
                 children.push(element)
             } else {
                 let children = [element];
-                types[element['deviceName']] = children;
+                types[element.deviceName] = children;
             }
         });
 
@@ -30,7 +31,6 @@ export function HubConnection() {
     }
     const initSocket = () => {
         socket.on('connect', () => {
-            console.log('connected');
             setIsConnected(true);
         });
 

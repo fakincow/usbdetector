@@ -4,12 +4,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { Modal } from "antd";
+import { IDeviceInfo } from '../models/models';
 
 export function FileSystemNavigator({ tree }) {
   const [mainCategory, setMainCategory] = React.useState([]);
   const [showPrompt, setShowPrompt] = React.useState(false);
-  const [selectedItemLabel, setSelectedItemLabel] = React.useState();
-  const [selectedItemDescription, setSelectedItemDescription] = React.useState();
+  const [selectedItemLabel, setSelectedItemLabel] = React.useState('');
+  const [selectedItemDescription, setSelectedItemDescription] = React.useState('');
   let initNumber = 0;
   React.useEffect(() => {
     let newMenu = [];
@@ -22,7 +23,7 @@ export function FileSystemNavigator({ tree }) {
     }
     setMainCategory(newMenu)
   }, [tree]);
-  const onSelect = (e) => {
+  const onSelect = (e:IDeviceInfo) => {
     console.log('onselect',e)
     setSelectedItemLabel(e.deviceName);
     setSelectedItemDescription(e.manufacturer + e.vendorId)
@@ -47,9 +48,9 @@ export function FileSystemNavigator({ tree }) {
         {mainCategory.map((e, i) => {
           initNumber++
           return <TreeItem nodeId={initNumber.toString()} label={e.name} key={i}>
-            {e.children.map((e, i) => {
+            {e.children.map((e:IDeviceInfo, i:number) => {
               initNumber++
-              return <TreeItem nodeId={initNumber.toString()} label={e['manufacturer']+ ':' + e['vendorId']} key={i} onClick={()=> onSelect(e)} />
+              return <TreeItem nodeId={initNumber.toString()} label={e.manufacturer + ':' + e.vendorId} key={i} onClick={()=> onSelect(e)} />
             })}
           </TreeItem>
         })}
