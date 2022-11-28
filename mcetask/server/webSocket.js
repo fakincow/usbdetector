@@ -1,6 +1,6 @@
 const
     {Server} = require("socket.io"),
-    server = new Server(8000);
+    server = new Server(9000);
 let
     sequenceNumberByClient = new Map();
 
@@ -20,7 +20,7 @@ server.on("connection", (socket) => {
 // sends each client its current sequence number
 setInterval(() => {
     for (const [client, sequenceNumber] of sequenceNumberByClient.entries()) {
-        client.emit("seq-num", {vendor:'vendor field',productId:'productId',type:'type',descriptions:'additional text' });
+        client.emit("products", {vendor:'vendor field',productId:'productId',type:'type',descriptions:'additional text' });
         sequenceNumberByClient.set(client, sequenceNumber + 1);
     }
 }, 1000);
