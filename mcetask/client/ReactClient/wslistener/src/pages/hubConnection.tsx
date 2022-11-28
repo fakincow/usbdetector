@@ -29,7 +29,6 @@ export function HubConnection() {
         setTree(types)
     }
     const initSocket = () => {
-        socket.on("data", () => { console.log('data >>>>') });
         socket.on('connect', () => {
             console.log('connected');
             setIsConnected(true);
@@ -40,11 +39,9 @@ export function HubConnection() {
         });
 
         socket.on('pong', (data) => {
-            console.log('hmmm', data);
             setLastPong(new Date().toISOString());
         });
         socket.on("products", (data) => {
-            console.log('list of products', data);
             createCategorys(data)
             setDevices(data);
         });
@@ -52,11 +49,11 @@ export function HubConnection() {
     useEffect(() => {
         initSocket()
 
-        //return () => {
-        //   socket.off('connect');
-        //   socket.off('disconnect');
-        //    socket.off('pong');
-        //   };
+        return () => {
+           socket.off('connect');
+           socket.off('disconnect');
+            socket.off('pong');
+           };
     }, []);
 
     return (

@@ -6,8 +6,7 @@ export function Navigation() {
         <nav className="flex justify-between items-center h-[50px] px-5 shadow-md bg-gray-500 text-white">
             <h3>MCE Systems Device Tree Exercise</h3>
             <span>
-                <Link to="/" className="mr-2">main view</Link>
-                <Link to="/favourites">second view mode</Link>
+                <Link to="/" className="mr-2">MAIN VIEW</Link>
             </span>
         </nav>
     )

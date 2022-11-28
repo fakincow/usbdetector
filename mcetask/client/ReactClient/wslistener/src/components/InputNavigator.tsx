@@ -25,6 +25,7 @@ export function FileSystemNavigator({ tree }) {
   const onSelect = (e) => {
     console.log('onselect',e)
     setSelectedItemLabel(e.deviceName);
+    setSelectedItemDescription(e.manufacturer + e.vendorId)
     setShowPrompt(true)
 
   }
@@ -48,7 +49,7 @@ export function FileSystemNavigator({ tree }) {
           return <TreeItem nodeId={initNumber.toString()} label={e.name} key={i}>
             {e.children.map((e, i) => {
               initNumber++
-              return <TreeItem nodeId={initNumber.toString()} label={e['productId']} key={i} onClick={()=> onSelect(e)} />
+              return <TreeItem nodeId={initNumber.toString()} label={e['manufacturer']+ ':' + e['vendorId']} key={i} onClick={()=> onSelect(e)} />
             })}
           </TreeItem>
         })}
@@ -62,7 +63,7 @@ export function FileSystemNavigator({ tree }) {
       cancelText="CLOSE"
       closable={true}
     >
-      SELECTED ITEM DETAILS
+      {selectedItemDescription}
     </Modal>
     </div>
   );
